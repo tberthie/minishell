@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/12 21:35:16 by tberthie          #+#    #+#             */
-/*   Updated: 2016/12/12 23:18:34 by tberthie         ###   ########.fr       */
+/*   Updated: 2016/12/13 10:17:38 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,7 @@ int				process(t_msh *msh, char *line)
 {
 	if (!ft_strcmp(line, "env"))
 		test(msh);
+	else
+		ft_printf("{red}msh : Command not found %s{eoc}\n", line);
 	return (1);
 }
