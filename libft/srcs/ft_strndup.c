@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/02 18:33:42 by tberthie          #+#    #+#             */
-/*   Updated: 2016/11/09 12:37:57 by tberthie         ###   ########.fr       */
+/*   Updated: 2016/12/14 14:42:33 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@ char	*ft_strndup(const char *s1, size_t n)
 	cpy = (char*)malloc(sizeof(char) * (n + 1));
 	if (!cpy)
 		return (NULL);
-	while (n-- > 0)
+	while (n-- && *s1)
 		cpy[i++] = *s1++;
-	cpy[i] = '\0';
+	while (n--)
+		cpy[i++] = 0;
+	cpy[i] = 0;
 	return (cpy);
 }

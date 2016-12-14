@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/12 21:35:16 by tberthie          #+#    #+#             */
-/*   Updated: 2016/12/13 10:17:38 by tberthie         ###   ########.fr       */
+/*   Updated: 2016/12/14 17:46:53 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,19 @@ static void		test(t_msh *msh)
 
 int				process(t_msh *msh, char *line)
 {
-	if (!ft_strcmp(line, "env"))
+	char	**args;
+
+	if (!(args = ft_strsplit(line, ' ')))
+		return (0);
+	if (!ft_strcmp(*args, "env"))
 		test(msh);
-	else
-		ft_printf("{red}msh : Command not found %s{eoc}\n", line);
+	else if (!ft_strcmp(*args, "exit"))
+		return (0);
+	else if (*args)
+	{
+		if (ft_strlen(*args) > 23)
+		   	ft_strcpy(&(*args)[20], "...\0");
+		ft_printf("{red}error{eoc} > invalid command %s\n", *args);
+	}
 	return (1);
 }

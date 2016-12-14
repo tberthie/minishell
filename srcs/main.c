@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/12 20:57:34 by tberthie          #+#    #+#             */
-/*   Updated: 2016/12/13 10:41:59 by tberthie         ###   ########.fr       */
+/*   Updated: 2016/12/14 14:51:42 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ int			main(void)
 	tgetent(0, name) &&
 	tcgetattr(0, &term) != -1)
 	{
-		term.c_lflag &= ~(ICANON);
-		term.c_lflag &= ~(ECHO);
+		term.c_lflag &= ~(ICANON | ECHO);
 		if (tcsetattr(0, TCSANOW, &term) != -1)
 			input(msh);
 	}

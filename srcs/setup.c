@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/12 21:32:09 by tberthie          #+#    #+#             */
-/*   Updated: 2016/12/12 22:57:09 by tberthie         ###   ########.fr       */
+/*   Updated: 2016/12/14 17:30:47 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,15 @@
 
 #include <stdlib.h>
 
-static char		**insert(char **tab, char *line)
-{
-	char	**newtab;
-	int		size;
-
-	size = 0;
-	while (tab[size])
-		size++;
-	if (!(newtab = malloc(sizeof(char*) * (size + 2))))
-		return (0);
-	newtab[size + 1] = 0;
-	newtab[size] = ft_strdup(line);
-	while (size--)
-		newtab[size] = tab[size];
-	free(tab);
-	return (newtab);
-}
-
 static int		setvars(t_msh *msh)
 {
 	int		pos;
 
 	pos = 0;
+	msh->home = 0;
+	msh->pwd = 0;
+	msh->oldpwd = 0;
+	msh->user = 0;
 	while (msh->env[pos])
 	{
 		if (!ft_strcmp(msh->env[pos], "HOME"))
@@ -61,14 +47,12 @@ t_msh			*setup(void)
 
 	if (!(msh = malloc(sizeof(t_msh))) ||
 	!(msh->env = malloc(sizeof(char*))) ||
-	!(msh->vals = malloc(sizeof(char*))))
+	!(msh->vals = malloc(sizeof(char*))) ||
+	!(msh->history = malloc(sizeof(char*))))
 		return (0);
 	*msh->env = 0;
 	*msh->vals = 0;
-	msh->pwd = 0;
-	msh->oldpwd = 0;
-	msh->home = 0;
-	msh->user = 0;
+	*msh->history = 0;
 	while (*environ)
 	{
 		tmp = ft_strchr(*environ, '=');

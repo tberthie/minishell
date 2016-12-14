@@ -2,7 +2,9 @@ SRCS = main.c \
 	   setup.c \
 	   input.c \
 	   process.c \
-	   env.c
+	   env.c \
+	   termcaps.c \
+	   utl.c
 
 OBJS = $(addprefix objs/,$(SRCS:.c=.o))
 
@@ -17,7 +19,7 @@ $(NAME): $(OBJS)
 	@echo "[libft]"
 	@make -C libft
 	@echo "[$(NAME)]"
-	@gcc $(FLAGS) -o $(NAME) libft/libft.a $(OBJS)
+	@gcc $(FLAGS) -o $(NAME) libft/libft.a $(OBJS) -l termcap
 
 objs/%.o: srcs/%.c
 	@$(CC) $(FLAGS) -I $(INCS) -I libft/includes -o $@ -c $<
