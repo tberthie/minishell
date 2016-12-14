@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/14 17:11:21 by tberthie          #+#    #+#             */
-/*   Updated: 2016/12/14 17:31:12 by tberthie         ###   ########.fr       */
+/*   Updated: 2016/12/14 19:10:23 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,3 @@ char		**insert(char **tab, char *line)
 	free(tab);
 	return (newtab);
 }
-

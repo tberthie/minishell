@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/12 21:06:11 by tberthie          #+#    #+#             */
-/*   Updated: 2016/12/14 17:52:42 by tberthie         ###   ########.fr       */
+/*   Updated: 2016/12/14 19:14:49 by tberthie         ###   ########.fr       */
 /*                                                                           */
 /* ************************************************************************** */
 
@@ -44,15 +44,14 @@ static int		addbuff(t_msh *msh, char *buff)
 		tmp[msh->pos] = *buff;
 		ft_strcpy(&tmp[msh->pos + 1], &msh->line[msh->pos]);
 	}
-	else
-		if (!(tmp = ft_strjoin(msh->line, buff)))
+	else if (!(tmp = ft_strjoin(msh->line, buff)))
 			return (0);
-	free(msh->line);
-	msh->line = tmp;
-	write(1, &msh->line[msh->pos], ft_strlen(&msh->line[msh->pos]));
-	i = ft_strlen(&msh->line[msh->pos]);
+	i = ft_strlen(&tmp[msh->pos]);
+	write(1, &tmp[msh->pos], i);
 	while (--i)
 		write(1, "\b", 1);
+	free(msh->line);
+	msh->line = tmp;
 	msh->len++;
 	msh->pos++;
 	return (1);
