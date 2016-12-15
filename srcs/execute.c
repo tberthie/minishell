@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/15 17:53:37 by tberthie          #+#    #+#             */
-/*   Updated: 2016/12/16 00:03:50 by tberthie         ###   ########.fr       */
+/*   Updated: 2016/12/16 00:13:32 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int			execute(t_msh *msh, char **args)
 	else if (childp == 0)
 	{
 		execv(path, args);
-		error("invalid command", *args);
+		error("invalid/forbidden command", *args);
 		return (free_ret(path, 0));
 	}
 	else
