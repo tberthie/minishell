@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/15 17:53:37 by tberthie          #+#    #+#             */
-/*   Updated: 2016/12/16 00:01:11 by tberthie         ###   ########.fr       */
+/*   Updated: 2016/12/16 00:03:50 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static char	*check_path(char *path, char *name)
 	if (!(dir = ft_strjoin(path, "/")) ||
 	!(tmp = ft_strjoin(dir, name)))
 		return (0);
+	free(dir);
 	if (access(tmp, X_OK) != -1)
 		return (tmp);
 	return (0);

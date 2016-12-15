@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/12 21:32:09 by tberthie          #+#    #+#             */
-/*   Updated: 2016/12/15 22:50:35 by tberthie         ###   ########.fr       */
+/*   Updated: 2016/12/16 00:06:50 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,5 @@ t_msh			*setup(void)
 	*msh->env = 0;
 	*msh->vals = 0;
 	*msh->history = 0;
-	return (!parse_env(msh) || !fetchenv(msh, "HOME") || !fetchenv(msh, "PWD")
-	|| !fetchenv(msh, "OLDPWD")) ? 0 : msh;
+	return (!parse_env(msh)) ? 0 : msh;
 }

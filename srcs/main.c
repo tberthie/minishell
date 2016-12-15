@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/12 20:57:34 by tberthie          #+#    #+#             */
-/*   Updated: 2016/12/15 22:56:17 by tberthie         ###   ########.fr       */
+/*   Updated: 2016/12/16 00:09:16 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,7 @@ int			main(void)
 		if (tcsetattr(0, TCSANOW, &term) != -1)
 			input(msh);
 	}
+	else
+		error("failed to load", 0);
 	return (0);
 }
