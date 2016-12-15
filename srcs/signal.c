@@ -1,38 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/12 20:57:34 by tberthie          #+#    #+#             */
-/*   Updated: 2016/12/15 22:56:17 by tberthie         ###   ########.fr       */
+/*   Created: 2016/12/15 20:02:36 by tberthie          #+#    #+#             */
+/*   Updated: 2016/12/16 00:01:31 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "minishell.h"
 
-#include <term.h>
 #include <unistd.h>
-#include <signal.h>
 
-int			g_process = 0;
-
-int			main(void)
+void			handler(int sig)
 {
-	t_msh			*msh;
-	char			*name;
-	struct termios	term;
-
-	signal(2, handler);
-	if ((msh = setup()) &&
-	(name = fetchenv(msh, "TERM")) &&
-	tgetent(0, name) &&
-	tcgetattr(0, &term) != -1)
+	if (sig == 2)
 	{
-		term.c_lflag &= ~(ICANON | ECHO);
-		if (tcsetattr(0, TCSANOW, &term) != -1)
-			input(msh);
+//		if (!g_process())
+		write(1, "\n", 1);
 	}
-	return (0);
 }

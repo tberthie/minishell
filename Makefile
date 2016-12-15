@@ -4,7 +4,9 @@ SRCS = main.c \
 	   process.c \
 	   env.c \
 	   termcaps.c \
-	   utl.c
+	   utl.c \
+	   execute.c \
+	   signal.c
 
 OBJS = $(addprefix objs/,$(SRCS:.c=.o))
 

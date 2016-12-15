@@ -6,8 +6,8 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/12 21:06:11 by tberthie          #+#    #+#             */
-/*   Updated: 2016/12/14 19:14:49 by tberthie         ###   ########.fr       */
-/*                                                                           */
+/*   Updated: 2016/12/16 00:00:58 by tberthie         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
@@ -17,12 +17,20 @@
 #include <unistd.h>
 #include <term.h>
 
+void			prompt(t_msh *msh)
+{
+	char	*user;
+
+	(user = fetchenv(msh, "USER")) ? ft_printf("< {green}%s{eoc} > ", user) :
+	ft_printf("< {green}%s{eoc} > ", PROMPT);
+}
+
 static int		exec(t_msh *msh)
 {
 	if (msh->pos != msh->len)
 		write(1, &msh->line[msh->pos], ft_strlen(&msh->line[msh->pos]));
 	write(1, "\n", 1);
-	if (*msh->line && !process(msh, msh->line))
+	if (*msh->line && !process(msh))
 		return (0);
 	free(msh->line);
 	msh->line = ft_strnew(0);
@@ -45,7 +53,7 @@ static int		addbuff(t_msh *msh, char *buff)
 		ft_strcpy(&tmp[msh->pos + 1], &msh->line[msh->pos]);
 	}
 	else if (!(tmp = ft_strjoin(msh->line, buff)))
-			return (0);
+		return (0);
 	i = ft_strlen(&tmp[msh->pos]);
 	write(1, &tmp[msh->pos], i);
 	while (--i)
