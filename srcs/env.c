@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/12 23:12:43 by tberthie          #+#    #+#             */
-/*   Updated: 2016/12/16 14:39:11 by tberthie         ###   ########.fr       */
+/*   Updated: 2016/12/16 17:45:20 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void			env(void)
 
 int				set_env(char *arg)
 {
-	char	*env;
 	char	*val;
 	int		pos;
 
@@ -50,22 +49,22 @@ int				set_env(char *arg)
 		error(arg ? "invalid value" : "invalid name", 0);
 	else
 	{
-		if (!(env = ft_strdup(arg)) ||
-		!(val = ft_strdup(ft_strchr(arg, '=') + 1)))
+		if (!(val = ft_strdup(ft_strchr(arg, '=') + 1)))
 			return (0);
-		*ft_strchr(env, '=') = 0;
+		*ft_strchr(arg, '=') = 0;
 		while (g_msh->env[pos])
-			if (!ft_strcmp(g_msh->env[pos++], env))
+			if (!ft_strcmp(g_msh->env[pos++], arg))
 			{
 				free(g_msh->vals[pos - 1]);
 				g_msh->vals[pos - 1] = val;
-				free(env);
-				return (1);
+				return (free_ret(arg, 1));
 			}
-		return (!(g_msh->env = tabinsert(g_msh->env, env)) ||
-		!(g_msh->vals = tabinsert(g_msh->vals, val))) ? 0 : 1;
+		if (!(g_msh->env = tabinsert(g_msh->env, arg)) ||
+		!(g_msh->vals = tabinsert(g_msh->vals, val)))
+			return (0);
+		free(val);
 	}
-	return (1);
+	return (free_ret(arg, 1));
 }
 
 int				unset_env(char *arg)

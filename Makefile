@@ -6,7 +6,9 @@ SRCS = main.c \
 	   termcaps.c \
 	   utl.c \
 	   execute.c \
-	   signal.c
+	   signal.c \
+	   tabs.c \
+	   cd.c 
 
 OBJS = $(addprefix objs/,$(SRCS:.c=.o))
 

@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/12 21:32:09 by tberthie          #+#    #+#             */
-/*   Updated: 2016/12/16 14:40:13 by tberthie         ###   ########.fr       */
+/*   Updated: 2016/12/16 16:13:05 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,10 @@ int				setup(void)
 {
 	if (!(g_msh = malloc(sizeof(t_msh))) ||
 	!(g_msh->env = malloc(sizeof(char*))) ||
-	!(g_msh->vals = malloc(sizeof(char*))) ||
-	!(g_msh->history = malloc(sizeof(char*))))
+	!(g_msh->vals = malloc(sizeof(char*))))
 		return (0);
 	*g_msh->env = 0;
 	*g_msh->vals = 0;
-	*g_msh->history = 0;
 	g_msh->proc = 0;
 	return (!parse_env()) ? 0 : 1;
 }

@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/12 21:03:13 by tberthie          #+#    #+#             */
-/*   Updated: 2016/12/16 14:41:21 by tberthie         ###   ########.fr       */
+/*   Updated: 2016/12/16 16:13:16 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ typedef struct		s_msh
 {
 	char			**env;
 	char			**vals;
-	char			**history;
 
 	char			*line;
 	int				pos;
@@ -35,6 +34,7 @@ void				input();
 int					process();
 void				handler(int sig);
 
+void				cd(char *path);
 int					execute(char **args);
 void				termcaps(char *tc);
 char				*fetchenv(char *name);
@@ -47,6 +47,8 @@ int					put_ret(int c);
 int					free_ret(void *p, int ret);
 void				error(char *msg, char *str);
 char				**tabinsert(char **tab, char *line);
+char				**tabpush(char **tab, char *line);
 void				tabremove(char **tab, char *line);
+void				tabfree(char **tab);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/15 17:53:37 by tberthie          #+#    #+#             */
-/*   Updated: 2016/12/16 14:38:57 by tberthie         ###   ########.fr       */
+/*   Updated: 2016/12/16 16:34:10 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static char	*check_path(char *path, char *name)
 	free(dir);
 	if (access(tmp, X_OK) != -1)
 		return (tmp);
+	free(tmp);
 	return (0);
 }
 

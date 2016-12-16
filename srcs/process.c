@@ -6,14 +6,14 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/12 21:35:16 by tberthie          #+#    #+#             */
-/*   Updated: 2016/12/16 14:39:39 by tberthie         ###   ########.fr       */
+/*   Updated: 2016/12/16 17:45:16 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
 
-void			echo(char *line)
+static void		echo(char *line)
 {
 	while (*line != 'e')
 		line++;
@@ -42,29 +42,48 @@ void			echo(char *line)
 	write(1, "\n", 1);
 }
 
+static void		replace(char **args)
+{
+	char	*tmp;
+
+	if (!(tmp = fetchenv("HOME")))
+		return ;
+	while (*args)
+	{
+		if (!ft_strcmp(*args, "~"))
+		{
+			free(*args);
+			*args = ft_strdup(tmp);
+		}
+		args++;
+	}
+}
+
 int				process(void)
 {
 	char	**args;
-	int		i;
 
-	i = 0;
-	if (!(args = ft_strsplit(g_msh->line, ' ')))
-		return (0);
-	if (*args)
+	if (!(args = ft_strsplit(g_msh->line, ' ')) || !*args)
+		return (args) ? free_ret(args, 1) : 0;
+	replace(&args[1]);
+	if (!ft_strcmp(*args, "cd"))
+		cd(args[1]);
+	else if (!ft_strcmp(*args, "echo"))
+		echo(g_msh->line);
+	else if (!ft_strcmp(*args, "env"))
+		env();
+	else if (!ft_strcmp(*args, "setenv"))
 	{
-		if (!ft_strcmp(*args, "env"))
-			env();
-		else if (!ft_strcmp(*args, "echo"))
-			echo(g_msh->line);
-		else if (!ft_strcmp(*args, "setenv"))
-			return (set_env(args[1]));
-		else if (!ft_strcmp(*args, "unsetenv"))
-			return (unset_env(args[1]));
-		else if (!ft_strcmp(*args, "exit") || !execute(args))
+		if (!set_env(ft_strdup(args[1])))
 			return (0);
 	}
-	while (args[i])
-		free(args[i++]);
-	free(args);
+	else if (!ft_strcmp(*args, "unsetenv"))
+	{
+		if (!unset_env(args[1]))
+			return (0);
+	}
+	else if (!ft_strcmp(*args, "exit") || !execute(args))
+		return (0);
+	tabfree(args);
 	return (1);
 }
