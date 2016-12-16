@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/12 21:06:11 by tberthie          #+#    #+#             */
-/*   Updated: 2016/12/16 00:00:58 by tberthie         ###   ########.fr       */
+/*   Updated: 2016/12/16 14:39:26 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,71 +17,71 @@
 #include <unistd.h>
 #include <term.h>
 
-void			prompt(t_msh *msh)
+void			prompt(void)
 {
 	char	*user;
 
-	(user = fetchenv(msh, "USER")) ? ft_printf("< {green}%s{eoc} > ", user) :
+	(user = fetchenv("USER")) ? ft_printf("< {green}%s{eoc} > ", user) :
 	ft_printf("< {green}%s{eoc} > ", PROMPT);
 }
 
-static int		exec(t_msh *msh)
+static int		exec(void)
 {
-	if (msh->pos != msh->len)
-		write(1, &msh->line[msh->pos], ft_strlen(&msh->line[msh->pos]));
+	if (g_msh->pos != g_msh->len)
+		write(1, &g_msh->line[g_msh->pos], ft_strlen(&g_msh->line[g_msh->pos]));
 	write(1, "\n", 1);
-	if (*msh->line && !process(msh))
+	if (*g_msh->line && !process())
 		return (0);
-	free(msh->line);
-	msh->line = ft_strnew(0);
-	msh->pos = 0;
-	msh->len = 0;
-	prompt(msh);
+	free(g_msh->line);
+	g_msh->line = ft_strnew(0);
+	g_msh->pos = 0;
+	g_msh->len = 0;
+	prompt();
 	return (1);
 }
 
-static int		addbuff(t_msh *msh, char *buff)
+static int		addbuff(char *buff)
 {
 	char	*tmp;
 	int		i;
 
-	if (msh->pos < msh->len)
+	if (g_msh->pos < g_msh->len)
 	{
-		if (!(tmp = ft_strndup(msh->line, ft_strlen(msh->line) + 1)))
+		if (!(tmp = ft_strndup(g_msh->line, ft_strlen(g_msh->line) + 1)))
 			return (0);
-		tmp[msh->pos] = *buff;
-		ft_strcpy(&tmp[msh->pos + 1], &msh->line[msh->pos]);
+		tmp[g_msh->pos] = *buff;
+		ft_strcpy(&tmp[g_msh->pos + 1], &g_msh->line[g_msh->pos]);
 	}
-	else if (!(tmp = ft_strjoin(msh->line, buff)))
+	else if (!(tmp = ft_strjoin(g_msh->line, buff)))
 		return (0);
-	i = ft_strlen(&tmp[msh->pos]);
-	write(1, &tmp[msh->pos], i);
+	i = ft_strlen(&tmp[g_msh->pos]);
+	write(1, &tmp[g_msh->pos], i);
 	while (--i)
 		write(1, "\b", 1);
-	free(msh->line);
-	msh->line = tmp;
-	msh->len++;
-	msh->pos++;
+	free(g_msh->line);
+	g_msh->line = tmp;
+	g_msh->len++;
+	g_msh->pos++;
 	return (1);
 }
 
-void			input(t_msh *msh)
+void			input(void)
 {
 	char	buff[4];
 	int		rd;
 
-	msh->line = ft_strnew(0);
-	msh->pos = 0;
-	msh->len = 0;
-	prompt(msh);
+	g_msh->line = ft_strnew(0);
+	g_msh->pos = 0;
+	g_msh->len = 0;
+	prompt();
 	while ((rd = read(0, buff, 3)))
 	{
 		buff[rd] = 0;
-		if (*buff == '\n' && !exec(msh))
+		if (*buff == '\n' && !exec())
 			return ;
 		else if (*buff < 32 || *buff == 127)
-			termcaps(msh, ft_strdup(buff));
-		else if (*buff > 31 && !addbuff(msh, buff))
+			termcaps(ft_strdup(buff));
+		else if (*buff > 31 && !addbuff(buff))
 			return ;
 	}
 }

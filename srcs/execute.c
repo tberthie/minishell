@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/15 17:53:37 by tberthie          #+#    #+#             */
-/*   Updated: 2016/12/16 00:13:32 by tberthie         ###   ########.fr       */
+/*   Updated: 2016/12/16 14:38:57 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static char	*check_path(char *path, char *name)
 	return (0);
 }
 
-static char	*find_path(t_msh *msh, char *name)
+static char	*find_path(char *name)
 {
 	char	**paths;
 	int		pos;
@@ -51,7 +51,7 @@ static char	*find_path(t_msh *msh, char *name)
 	char	*path;
 
 	pos = 0;
-	if (!(tmp = fetchenv(msh, "PATH")))
+	if (!(tmp = fetchenv("PATH")))
 		return (ft_strdup(name));
 	if (!(paths = ft_strsplit(tmp, ':')))
 		return (0);
@@ -65,16 +65,16 @@ static char	*find_path(t_msh *msh, char *name)
 	return (path ? path : ft_strdup(name));
 }
 
-int			execute(t_msh *msh, char **args)
+int			execute(char **args)
 {
 	pid_t	childp;
 	int		status;
 	char	*path;
 
-	if (!(path = find_path(msh, *args)))
+	if (!(path = find_path(*args)))
 		return (0);
-	g_process = 1;
 	childp = fork();
+	g_msh->proc = childp;
 	if (childp < 0)
 		error("fork failed", 0);
 	else if (childp == 0)
@@ -88,6 +88,6 @@ int			execute(t_msh *msh, char **args)
 		wait(&status);
 		exec_error(status);
 	}
-	g_process = 0;
+	g_msh->proc = 0;
 	return (free_ret(path, 1));
 }

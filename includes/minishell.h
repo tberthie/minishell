@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/12 21:03:13 by tberthie          #+#    #+#             */
-/*   Updated: 2016/12/15 23:42:17 by tberthie         ###   ########.fr       */
+/*   Updated: 2016/12/16 14:41:21 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,24 @@ typedef struct		s_msh
 	char			*line;
 	int				pos;
 	int				len;
+
+	int				proc;
 }					t_msh;
 
-extern int			g_process;
+t_msh				*g_msh;
 
-t_msh				*setup(void);
-void				input(t_msh *msh);
-int					process(t_msh *msh);
+int					setup(void);
+void				input();
+int					process();
 void				handler(int sig);
 
-int					execute(t_msh *msh, char **args);
-void				termcaps(t_msh *msh, char *tc);
-char				*fetchenv(t_msh *msh, char *name);
-void				env(t_msh *msh);
-int					set_env(t_msh *msh, char *arg);
-int					unset_env(t_msh *msh, char *arg);
-void				prompt(t_msh *msh);
+int					execute(char **args);
+void				termcaps(char *tc);
+char				*fetchenv(char *name);
+void				env();
+int					set_env(char *arg);
+int					unset_env(char *arg);
+void				prompt();
 
 int					put_ret(int c);
 int					free_ret(void *p, int ret);

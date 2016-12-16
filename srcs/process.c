@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/12 21:35:16 by tberthie          #+#    #+#             */
-/*   Updated: 2016/12/15 23:54:17 by tberthie         ###   ########.fr       */
+/*   Updated: 2016/12/16 14:39:39 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,25 +42,25 @@ void			echo(char *line)
 	write(1, "\n", 1);
 }
 
-int				process(t_msh *msh)
+int				process(void)
 {
 	char	**args;
 	int		i;
 
 	i = 0;
-	if (!(args = ft_strsplit(msh->line, ' ')))
+	if (!(args = ft_strsplit(g_msh->line, ' ')))
 		return (0);
 	if (*args)
 	{
 		if (!ft_strcmp(*args, "env"))
-			env(msh);
+			env();
 		else if (!ft_strcmp(*args, "echo"))
-			echo(msh->line);
+			echo(g_msh->line);
 		else if (!ft_strcmp(*args, "setenv"))
-			return (set_env(msh, args[1]));
+			return (set_env(args[1]));
 		else if (!ft_strcmp(*args, "unsetenv"))
-			return (unset_env(msh, args[1]));
-		else if (!ft_strcmp(*args, "exit") || !execute(msh, args))
+			return (unset_env(args[1]));
+		else if (!ft_strcmp(*args, "exit") || !execute(args))
 			return (0);
 	}
 	while (args[i])

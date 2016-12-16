@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/12 21:32:09 by tberthie          #+#    #+#             */
-/*   Updated: 2016/12/16 00:06:50 by tberthie         ###   ########.fr       */
+/*   Updated: 2016/12/16 14:40:13 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include <stdlib.h>
 
-static int		parse_env(t_msh *msh)
+static int		parse_env(void)
 {
 	extern char		**environ;
 	char			*tmp;
@@ -25,10 +25,10 @@ static int		parse_env(t_msh *msh)
 	while (environ[pos])
 	{
 		tmp = ft_strdup(environ[pos]);
-		if (!(msh->vals = tabinsert(msh->vals, ft_strchr(tmp, '=') + 1)))
+		if (!(g_msh->vals = tabinsert(g_msh->vals, ft_strchr(tmp, '=') + 1)))
 			return (0);
 		*(ft_strchr(tmp, '=')) = 0;
-		if (!(msh->env = tabinsert(msh->env, tmp)))
+		if (!(g_msh->env = tabinsert(g_msh->env, tmp)))
 			return (0);
 		free(tmp);
 		pos++;
@@ -36,17 +36,16 @@ static int		parse_env(t_msh *msh)
 	return (1);
 }
 
-t_msh			*setup(void)
+int				setup(void)
 {
-	t_msh			*msh;
-
-	if (!(msh = malloc(sizeof(t_msh))) ||
-	!(msh->env = malloc(sizeof(char*))) ||
-	!(msh->vals = malloc(sizeof(char*))) ||
-	!(msh->history = malloc(sizeof(char*))))
+	if (!(g_msh = malloc(sizeof(t_msh))) ||
+	!(g_msh->env = malloc(sizeof(char*))) ||
+	!(g_msh->vals = malloc(sizeof(char*))) ||
+	!(g_msh->history = malloc(sizeof(char*))))
 		return (0);
-	*msh->env = 0;
-	*msh->vals = 0;
-	*msh->history = 0;
-	return (!parse_env(msh)) ? 0 : msh;
+	*g_msh->env = 0;
+	*g_msh->vals = 0;
+	*g_msh->history = 0;
+	g_msh->proc = 0;
+	return (!parse_env()) ? 0 : 1;
 }

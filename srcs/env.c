@@ -6,40 +6,40 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/12 23:12:43 by tberthie          #+#    #+#             */
-/*   Updated: 2016/12/15 21:52:06 by tberthie         ###   ########.fr       */
+/*   Updated: 2016/12/16 14:39:11 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
 
-char			*fetchenv(t_msh *msh, char *name)
+char			*fetchenv(char *name)
 {
 	int		pos;
 
 	pos = 0;
-	while (msh->env[pos])
+	while (g_msh->env[pos])
 	{
-		if (!ft_strcmp(name, msh->env[pos]))
-			return (msh->vals[pos]);
+		if (!ft_strcmp(name, g_msh->env[pos]))
+			return (g_msh->vals[pos]);
 		pos++;
 	}
 	return (0);
 }
 
-void			env(t_msh *msh)
+void			env(void)
 {
 	int		i;
 
 	i = 0;
-	while (msh->env[i])
+	while (g_msh->env[i])
 	{
-		ft_printf("%s=%s\n", msh->env[i], msh->vals[i]);
+		ft_printf("%s=%s\n", g_msh->env[i], g_msh->vals[i]);
 		i++;
 	}
 }
 
-int				set_env(t_msh *msh, char *arg)
+int				set_env(char *arg)
 {
 	char	*env;
 	char	*val;
@@ -54,21 +54,21 @@ int				set_env(t_msh *msh, char *arg)
 		!(val = ft_strdup(ft_strchr(arg, '=') + 1)))
 			return (0);
 		*ft_strchr(env, '=') = 0;
-		while (msh->env[pos])
-			if (!ft_strcmp(msh->env[pos++], env))
+		while (g_msh->env[pos])
+			if (!ft_strcmp(g_msh->env[pos++], env))
 			{
-				free(msh->vals[pos - 1]);
-				msh->vals[pos - 1] = val;
+				free(g_msh->vals[pos - 1]);
+				g_msh->vals[pos - 1] = val;
 				free(env);
 				return (1);
 			}
-		return (!(msh->env = tabinsert(msh->env, env)) ||
-		!(msh->vals = tabinsert(msh->vals, val))) ? 0 : 1;
+		return (!(g_msh->env = tabinsert(g_msh->env, env)) ||
+		!(g_msh->vals = tabinsert(g_msh->vals, val))) ? 0 : 1;
 	}
 	return (1);
 }
 
-int				unset_env(t_msh *msh, char *arg)
+int				unset_env(char *arg)
 {
 	char	*val;
 	int		pos;
@@ -76,16 +76,16 @@ int				unset_env(t_msh *msh, char *arg)
 	pos = 0;
 	if (!arg)
 		error("bad assignement", 0);
-	else if (!(val = fetchenv(msh, arg)))
+	else if (!(val = fetchenv(arg)))
 		error("unknown value", arg);
 	else
 	{
-		while (msh->env[pos])
+		while (g_msh->env[pos])
 		{
-			if (!ft_strcmp(arg, msh->env[pos]))
+			if (!ft_strcmp(arg, g_msh->env[pos]))
 			{
-				tabremove(msh->env, msh->env[pos]);
-				tabremove(msh->vals, msh->vals[pos]);
+				tabremove(g_msh->env, g_msh->env[pos]);
+				tabremove(g_msh->vals, g_msh->vals[pos]);
 				return (1);
 			}
 			pos++;
