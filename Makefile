@@ -23,7 +23,7 @@ $(NAME): $(OBJS)
 	@echo "[libft]"
 	@make -C libft
 	@echo "[$(NAME)]"
-	@gcc $(FLAGS) -o $(NAME) libft/libft.a $(OBJS) -l termcap
+	@gcc $(FLAGS) -o $(NAME) $(OBJS) libft/libft.a -l termcap
 
 objs/%.o: srcs/%.c
 	@$(CC) $(FLAGS) -I $(INCS) -I libft/includes -o $@ -c $<

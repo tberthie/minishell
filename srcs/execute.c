@@ -66,6 +66,31 @@ static char	*find_path(char *name)
 	return (path ? path : ft_strdup(name));
 }
 
+static char		**buildenv(void)
+{
+	char	**tab;
+	int	pos;
+	char	*tmp;
+	char	*env;
+
+	pos = 0;
+	if (!(tab = malloc(sizeof(char*))))
+		return (0);
+	*tab = 0;
+	while (g_msh->env[pos])
+	{
+		tmp = ft_strjoin(g_msh->env[pos], "=");
+		env = ft_strjoin(tmp, g_msh->env[pos]);
+		free(tmp);
+		if (!(tab = tabinsert(tab, env)))
+			return (0);
+		free(env);
+		pos++;
+	}
+	tab[pos] = 0;
+	return (tab);
+}
+
 int			execute(char **args)
 {
 	pid_t	childp;
@@ -80,7 +105,7 @@ int			execute(char **args)
 		error("fork failed", 0);
 	else if (childp == 0)
 	{
-		execv(path, args);
+		execve(path, args, buildenv());
 		error("invalid/forbidden command", *args);
 		return (free_ret(path, 0));
 	}

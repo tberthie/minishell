@@ -17,9 +17,6 @@
 
 static void		move(char c)
 {
-	char	*res;
-
-	res = 0;
 	if (c == 'D' && g_msh->pos)
 	{
 		write(1, "\b", 1);

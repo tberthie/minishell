@@ -77,7 +77,7 @@ PF_OBJ = $(addprefix printf/, $(PRINTF:.c=.o))
 
 NAME = libft.a
 CC = gcc
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra
 INCS = includes
 
 all: $(NAME)
