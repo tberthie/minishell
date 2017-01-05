@@ -51,6 +51,21 @@ char		**tabpush(char **tab, char *line)
 	return (newtab);
 }
 
+char		*addchar(char *str, char c)
+{
+	char	*new;
+	int	i;
+
+	i = ft_strlen(str) + 1;
+	if (!(new = malloc(sizeof(char) * (i + 1))))
+		return (0);
+	new = ft_strcpy(new, str);
+	new[i - 1] = c;
+	new[i] = 0;
+	free(str);
+	return (new);
+}
+
 void		tabremove(char **tab, char *line)
 {
 	int		size;

@@ -13,30 +13,12 @@
 #include "libft.h"
 #include "minishell.h"
 
-static void		echo(char *line)
+static void		echo(char **args)
 {
-	while (*line != 'e')
-		line++;
-	line += 4;
-	while (*line == ' ')
-		line++;
-	while (*line)
+	while (*args)
 	{
-		while (*line && *line != ' ')
-		{
-			if (*line == '"' && (line += 1))
-				while (*line && *line != '"')
-					write(1, line++, 1);
-			else if (*line == '\'' && (line += 1))
-				while (*line && *line != '\'')
-					write(1, line++, 1);
-			else
-				write(1, line, 1);
-			*line ? line += 1 : 0;
-		}
-		while (*line == ' ')
-			line++;
-		if (*line)
+		write(1, *args, ft_strlen(*args));
+		if (*(++args))
 			write(1, " ", 1);
 	}
 	write(1, "\n", 1);
@@ -59,17 +41,28 @@ static void		replace(char **args)
 	}
 }
 
+char				**split(char *line)
+{
+	char	**args;
+
+	if (!(args = malloc(sizeof(char*))))
+		return (0);
+	*args = 0;
+	//addchar(str, c);
+	return (args);
+}
+
 int				process(void)
 {
 	char	**args;
 
-	if (!(args = ft_strsplit(g_msh->line, ' ')) || !*args)
+	if (!(args = split(g_msh->line)) || !*args)
 		return (args) ? free_ret(args, 1) : 0;
 	replace(&args[1]);
 	if (!ft_strcmp(*args, "cd"))
 		cd(args[1]);
 	else if (!ft_strcmp(*args, "echo"))
-		echo(g_msh->line);
+		echo(&args[1]);
 	else if (!ft_strcmp(*args, "env"))
 		env();
 	else if (!ft_strcmp(*args, "setenv"))
