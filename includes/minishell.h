@@ -50,5 +50,6 @@ char				**tabinsert(char **tab, char *line);
 char				**tabpush(char **tab, char *line);
 void				tabremove(char **tab, char *line);
 void				tabfree(char **tab);
+char				*addchar(char *str, char c);
 
 #endif

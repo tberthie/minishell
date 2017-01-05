@@ -41,14 +41,48 @@ static void		replace(char **args)
 	}
 }
 
+char				*getword(char **line)
+{
+	char	*word;
+	char	quote;
+
+	if (!(word = malloc(sizeof(char))))
+		return (0);
+	*word = 0;
+	while (**line && **line != ' ')
+	{
+		if (**line == '\'' || **line == '"')
+		{
+			quote = **line++;
+			while (**line && **line != quote)
+				word = addchar(word, **line);
+		}
+		else
+			word = addchar(word, **line);
+		(*line)++;
+	}
+	return (word);
+}
+
 char				**split(char *line)
 {
 	char	**args;
+	char	*word;
 
 	if (!(args = malloc(sizeof(char*))))
 		return (0);
 	*args = 0;
-	//addchar(str, c);
+	while (*line)
+	{
+		while (*line == ' ')
+			line++;
+		if (*line)
+		{
+			if (!(word = getword(&line)) || !(args = tabinsert(args, word)))
+				return (0);
+			free(word);
+		}
+	}
 	return (args);
 }
 
