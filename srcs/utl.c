@@ -30,7 +30,7 @@ int			free_ret(void *p, int ret)
 void		error(char *msg, char *str)
 {
 	if (str)
-		ft_printf("{red}error{eoc}: > %s \"%s\"\n", msg, str);
+		ft_printf("{red}error{eoc}: %s \"%s\"\n", msg, str);
 	else
-		ft_printf("{red}error{eoc} > %s\n", msg);
+		ft_printf("{red}error{eoc}: %s\n", msg);
 }

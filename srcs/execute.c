@@ -69,9 +69,9 @@ static char	*find_path(char *name)
 static char		**buildenv(void)
 {
 	char	**tab;
-	int	pos;
 	char	*tmp;
 	char	*env;
+	int	pos;
 
 	pos = 0;
 	if (!(tab = malloc(sizeof(char*))))
@@ -80,7 +80,7 @@ static char		**buildenv(void)
 	while (g_msh->env[pos])
 	{
 		tmp = ft_strjoin(g_msh->env[pos], "=");
-		env = ft_strjoin(tmp, g_msh->env[pos]);
+		env = ft_strjoin(tmp, g_msh->vals[pos]);
 		free(tmp);
 		if (!(tab = tabinsert(tab, env)))
 			return (0);

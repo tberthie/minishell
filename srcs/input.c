@@ -21,8 +21,8 @@ void			prompt(void)
 {
 	char	*user;
 
-	(user = fetchenv("USER")) ? ft_printf("< {green}%s{eoc} > ", user) :
-	ft_printf("< {green}%s{eoc} > ", PROMPT);
+	(user = fetchenv("USER")) ? ft_printf("{green}%s{eoc} >> ", user) :
+	ft_printf("{green}%s{eoc} >> ", PROMPT);
 }
 
 static int		exec(void)

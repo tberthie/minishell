@@ -34,7 +34,10 @@ void			env(void)
 	i = 0;
 	while (g_msh->env[i])
 	{
-		ft_printf("%s=%s\n", g_msh->env[i], g_msh->vals[i]);
+		ft_putstr(g_msh->env[i]);
+		write(1, "=", 1);
+		ft_putstr(g_msh->vals[i]);
+		write(1, "\n", 1);
 		i++;
 	}
 }
