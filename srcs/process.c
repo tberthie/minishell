@@ -53,13 +53,13 @@ char				*getword(char **line)
 	{
 		if (**line == '\'' || **line == '"')
 		{
-			quote = **line++;
+			quote = *((*line)++);
 			while (**line && **line != quote)
-				word = addchar(word, **line);
+				word = addchar(word, *((*line)++));
 		}
 		else
 			word = addchar(word, **line);
-		(*line)++;
+		**line ? *line += 1 : 0;
 	}
 	return (word);
 }
