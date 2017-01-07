@@ -10,7 +10,7 @@ SRCS = main.c \
 	   tabs.c \
 	   cd.c 
 
-OBJS = $(addprefix objs/,$(SRCS:.c=.o))
+OBJS = $(addprefix srcs/,$(SRCS:.c=.o))
 
 NAME = minishell
 CC = gcc
@@ -25,7 +25,7 @@ $(NAME): $(OBJS)
 	@echo "[$(NAME)]"
 	@gcc $(FLAGS) -o $(NAME) $(OBJS) libft/libft.a -l termcap
 
-objs/%.o: srcs/%.c
+srcs/%.o: srcs/%.c
 	@$(CC) $(FLAGS) -I $(INCS) -I libft/includes -o $@ -c $<
 	@echo "[$@]"
 
