@@ -29,8 +29,9 @@ int			free_ret(void *p, int ret)
 
 void		error(char *msg, char *str)
 {
-	if (str)
-		ft_printf("{red}error{eoc}: %s \"%s\"\n", msg, str);
-	else
-		ft_printf("{red}error{eoc}: %s\n", msg);
+	write(1, "\x1b[31merror\x1b[0m: ", 17);
+	write(1, msg, ft_strlen(msg));
+	write(1, " \"", 2);
+	str ? write(1, str, ft_strlen(str)) : 0;
+	write(1, "\"\n", 2);
 }
