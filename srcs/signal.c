@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/15 20:02:36 by tberthie          #+#    #+#             */
-/*   Updated: 2016/12/16 15:33:43 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/01/08 14:31:54 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "minishell.h"
 
 #include <unistd.h>
-#include <wait.h>
 
 void			handler(int sig)
 {

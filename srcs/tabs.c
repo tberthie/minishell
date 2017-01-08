@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/16 14:53:13 by tberthie          #+#    #+#             */
-/*   Updated: 2016/12/16 15:27:51 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/01/08 14:28:57 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char		**tabpush(char **tab, char *line)
 char		*addchar(char *str, char c)
 {
 	char	*new;
-	int	i;
+	int		i;
 
 	i = ft_strlen(str) + 1;
 	if (!(new = malloc(sizeof(char) * (i + 1))))

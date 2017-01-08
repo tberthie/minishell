@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/12 21:35:16 by tberthie          #+#    #+#             */
-/*   Updated: 2016/12/16 17:45:16 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/01/08 15:47:13 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void		replace(char **args)
 	}
 }
 
-char				*getword(char **line)
+char			*getword(char **line)
 {
 	char	*word;
 	char	quote;
@@ -64,7 +64,7 @@ char				*getword(char **line)
 	return (word);
 }
 
-char				**split(char *line)
+char			**split(char *line)
 {
 	char	**args;
 	char	*word;
@@ -78,7 +78,8 @@ char				**split(char *line)
 			line++;
 		if (*line)
 		{
-			if (!(word = getword(&line)) || !(args = tabinsert(args, word)))
+			if (!(word = getword(&line)) ||
+			!(args = tabinsert(args, word)))
 				return (0);
 			free(word);
 		}
@@ -101,7 +102,7 @@ int				process(void)
 		env();
 	else if (!ft_strcmp(*args, "setenv"))
 	{
-		if (!set_env(ft_strdup(args[1])))
+		if (!set_env(args[1]))
 			return (0);
 	}
 	else if (!ft_strcmp(*args, "unsetenv"))

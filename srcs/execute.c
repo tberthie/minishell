@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/15 17:53:37 by tberthie          #+#    #+#             */
-/*   Updated: 2016/12/16 16:34:10 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/01/08 14:31:33 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <signal.h>
 #include <unistd.h>
 
-static void	exec_error(int id)
+static void		exec_error(int id)
 {
 	if (id == 6)
 		ft_printf("{red}error{eoc} > process terminated [ABRT]\n");
@@ -29,7 +29,7 @@ static void	exec_error(int id)
 		ft_printf("{red}error{eoc} > process terminated [SEGV]\n");
 }
 
-static char	*check_path(char *path, char *name)
+static char		*check_path(char *path, char *name)
 {
 	char			*tmp;
 	char			*dir;
@@ -44,7 +44,7 @@ static char	*check_path(char *path, char *name)
 	return (0);
 }
 
-static char	*find_path(char *name)
+static char		*find_path(char *name)
 {
 	char	**paths;
 	int		pos;
@@ -71,7 +71,7 @@ static char		**buildenv(void)
 	char	**tab;
 	char	*tmp;
 	char	*env;
-	int	pos;
+	int		pos;
 
 	pos = 0;
 	if (!(tab = malloc(sizeof(char*))))
@@ -91,7 +91,7 @@ static char		**buildenv(void)
 	return (tab);
 }
 
-int			execute(char **args)
+int				execute(char **args)
 {
 	pid_t	childp;
 	int		status;
