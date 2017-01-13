@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/16 15:38:17 by tberthie          #+#    #+#             */
-/*   Updated: 2016/12/16 17:43:43 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/01/13 13:24:12 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,11 @@ void		cd(char *path)
 	tmp = fetchenv("PWD");
 	if (!(env = ft_strjoin("PWD=", getcwd(buff, PATH_MAX))) || !set_env(env))
 		return ;
+	free(env);
 	if (tmp && *tmp)
 	{
 		if (!(env = ft_strjoin("OLDPWD=", tmp)) || !set_env(env))
 			return ;
+		free(env);
 	}
 }
