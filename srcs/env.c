@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/12 23:12:43 by tberthie          #+#    #+#             */
-/*   Updated: 2016/12/16 17:45:20 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/01/13 13:15:00 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int				set_env(char *arg)
 	int		pos;
 
 	pos = 0;
+	arg ? arg = ft_strdup(arg) : 0;
 	if (!arg || !ft_strchr(arg, '='))
 		error(arg ? "invalid value" : "invalid name", 0);
 	else
@@ -67,7 +68,7 @@ int				set_env(char *arg)
 			return (0);
 		free(val);
 	}
-	return (free_ret(arg, 1));
+	return (arg) ? free_ret(arg, 1) : 1;
 }
 
 int				unset_env(char *arg)
